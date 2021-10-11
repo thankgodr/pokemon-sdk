@@ -1,0 +1,3 @@
+include ':pokemonsdk'
+include ':app'
+rootProject.name = "Pokemon"
