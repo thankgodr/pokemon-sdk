@@ -2,4 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.richard.pokemonsdk">
 
+    <application>
+        <activity
+            android:name=".ui.SearchUi"
+            android:theme="@style/Theme.AppCompat.DialogWhenLarge"
+            ></activity>
+    </application>
+
 </manifest>

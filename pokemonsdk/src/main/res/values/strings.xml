@@ -1,1 +1,9 @@
-<resources></resources>
+<resources>
+    <string name="Getdescription">Get Description</string>
+    <string name="getImage">Get Images</string>
+    <string name="searchDes">Search Description</string>
+    <string name="searchImage">Search Image</string>
+    <string name="provideValidEntry">Please provide a valid entry</string>
+    <string name="enterPokemonName">Enter Pokemon Name</string>
+    <string name="title">Pokemon Sdk</string>
+</resources>
