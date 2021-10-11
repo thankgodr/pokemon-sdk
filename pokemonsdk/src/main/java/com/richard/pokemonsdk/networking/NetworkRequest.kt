@@ -12,6 +12,10 @@ import java.lang.Exception
 import java.util.concurrent.Callable
 
 class NetworkRequest<RETURN_CLASS>(val model : RETURN_CLASS){
+    /**
+     * handles all post Request and returns ans Obserble with reflection
+     * Throws error on Failed
+     */
     fun post(url: String, postbody: String): Observable<RETURN_CLASS> {
         val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
         val body = RequestBody.create(JSON, postbody)
@@ -23,7 +27,7 @@ class NetworkRequest<RETURN_CLASS>(val model : RETURN_CLASS){
                     .post(body)
                     .build()
                 try{
-                    val httpClient = OkHttpClient();
+                    val httpClient = OkHttpClient()
                     val response = httpClient.newCall(request).execute()
                     return if (response.isSuccessful) {
                         val json: String = response.body!!.string()
@@ -52,6 +56,11 @@ class NetworkRequest<RETURN_CLASS>(val model : RETURN_CLASS){
         })
 
     }
+
+    /**
+     * Handales all get request
+     * Throws error on Failed
+     */
     fun get(url: String): Observable<RETURN_CLASS> {
         return Observable.fromCallable(object :
             @io.reactivex.rxjava3.annotations.NonNull Callable<RETURN_CLASS> {
@@ -61,7 +70,7 @@ class NetworkRequest<RETURN_CLASS>(val model : RETURN_CLASS){
                     .get()
                     .build()
                 try{
-                    val httpClient = OkHttpClient();
+                    val httpClient = OkHttpClient()
                     val response = httpClient.newCall(request).execute()
                     return if (response.isSuccessful) {
                         val json: String = response.body!!.string()
@@ -98,6 +107,11 @@ class NetworkRequest<RETURN_CLASS>(val model : RETURN_CLASS){
 
     }
 
+
+    /**
+     * downlodStrem is redundanct to method overloading get()
+     * Returns Input stream.
+     */
     fun get(url: String, downloadStream : Boolean = true): Observable<InputStream> {
         return Observable.fromCallable(object :
             @io.reactivex.rxjava3.annotations.NonNull Callable<InputStream> {
@@ -115,18 +129,18 @@ class NetworkRequest<RETURN_CLASS>(val model : RETURN_CLASS){
                         throw IOException(
                             "{'code': '${response.code}', 'message' : " +
                                     "'${response.message}', 'info' : '${response.body!!.string()}'}"
-                        )!!
+                        )
                     }
                 }catch (e : Exception){
                     if(e is IOException){
                         throw IOException(
                             e.localizedMessage
-                        )!!
+                        )
                     }else{
                         throw IOException(
                             "{'code': 60000, 'message' : " +
                                     "'unknown Error', 'info' : '${e.localizedMessage}'}"
-                        )!!
+                        )
                     }
                 }
 

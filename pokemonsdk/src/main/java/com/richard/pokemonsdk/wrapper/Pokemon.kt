@@ -1,6 +1,6 @@
 package com.richard.pokemonsdk.wrapper
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -10,9 +10,9 @@ import com.richard.pokemonsdk.`interface`.PokemonAccessResult
 import com.richard.pokemonsdk.helpers.Constant
 import com.richard.pokemonsdk.model.*
 import com.richard.pokemonsdk.networking.NetworkRequest
+import com.richard.pokemonsdk.ui.SearchUi
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.lang.Exception
 
 object Pokemon {
     fun ShakespeareanDescription(shakespeareRequest: PokemonTranslateRequest,
@@ -20,7 +20,7 @@ object Pokemon {
     ){
         pokemonAccessResult.onStart()
         //TOdo remove url to string
-        val url = "https://api.funtranslations.com/translate/shakespeare.json";
+        val url = Constant.funtranslateURl
         val networkCall = NetworkRequest<shakespeareRespnse>(shakespeareRespnse(SuccessHolder(0), ContentHolder("","","")))
         pokemonAccessResult.onNetworkrequest()
         networkCall.post(url, Gson().toJson(shakespeareRequest)).subscribeOn(Schedulers.io())
@@ -35,7 +35,7 @@ object Pokemon {
     }
 
     fun getDescription(request: PokemonRequest, pokemonAccessResult: PokemonAccessResult<DescriptionResponse, ApiError>){
-        val url = "https://pokeapi.co/api/v2/pokemon-species/" + request.name
+        val url = Constant.specieUrl + request.name
         Log.i("okh", "URL is ${url}")
         val networkCall = NetworkRequest<DescriptionResponse>(DescriptionResponse(0,null))
         pokemonAccessResult.onStart()
@@ -57,7 +57,7 @@ object Pokemon {
     }
 
     fun getSprites(request: PokemonRequest, pokemonAccessResult: PokemonAccessResult<SpriteResponse, ApiError>){
-        val url = "https://pokeapi.co/api/v2/pokemon/" + request.name
+        val url = Constant.pokemonBaseUrl + request.name
         val networkCall = NetworkRequest<SpriteResponse>(SpriteResponse())
         pokemonAccessResult.onStart()
         try {
@@ -101,8 +101,9 @@ object Pokemon {
         }
     }
 
-    fun startUI(context : Context){
-
+    fun startUIforResult(context : Activity){
+        val intent  = Intent(context, SearchUi::class.java);
+        context.startActivityForResult(intent, Constant.PokemonRequestCode)
     }
 
 }
