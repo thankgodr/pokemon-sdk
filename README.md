@@ -209,3 +209,6 @@ Step 2. Add the dependency
 ## Show your support
 
 Give a ⭐️ if you like this project!
+
+[![](https://jitpack.io/v/thankgodr/pokemon-sdk.svg)](https://jitpack.io/#thankgodr/pokemon-sdk)
+
