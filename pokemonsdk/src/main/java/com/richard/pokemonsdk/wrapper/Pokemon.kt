@@ -6,7 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import com.google.gson.Gson
-import com.richard.pokemonsdk.`interface`.PokemonAccessResult
+import com.richard.pokemonsdk.pokinterface.PokemonAccessResult
 import com.richard.pokemonsdk.helpers.Constant
 import com.richard.pokemonsdk.model.*
 import com.richard.pokemonsdk.networking.NetworkRequest
@@ -18,7 +18,7 @@ object Pokemon {
     fun ShakespeareanDescription(shakespeareRequest: PokemonTranslateRequest,
                                  pokemonAccessResult: PokemonAccessResult<shakespeareRespnse, ApiError>
     ){
-        pokemonAccessResult.onStart()
+        pokemonAccessResult.onPokStart()
         //TOdo remove url to string
         val url = Constant.funtranslateURl
         val networkCall = NetworkRequest<shakespeareRespnse>(shakespeareRespnse(SuccessHolder(0), ContentHolder("","","")))
@@ -38,7 +38,7 @@ object Pokemon {
         val url = Constant.specieUrl + request.name
         Log.i("okh", "URL is ${url}")
         val networkCall = NetworkRequest<DescriptionResponse>(DescriptionResponse(0,null))
-        pokemonAccessResult.onStart()
+        pokemonAccessResult.onPokStart()
         try{
             networkCall.get(url).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -59,7 +59,7 @@ object Pokemon {
     fun getSprites(request: PokemonRequest, pokemonAccessResult: PokemonAccessResult<SpriteResponse, ApiError>){
         val url = Constant.pokemonBaseUrl + request.name
         val networkCall = NetworkRequest<SpriteResponse>(SpriteResponse())
-        pokemonAccessResult.onStart()
+        pokemonAccessResult.onPokStart()
         try {
             networkCall.get(url).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -82,7 +82,7 @@ object Pokemon {
 
     fun downloadSpritesImages(url : String, pokemonAccessResult: PokemonAccessResult<Bitmap, ApiError>){
         val networkCall = NetworkRequest<String>(String())
-        pokemonAccessResult.onStart()
+        pokemonAccessResult.onPokStart()
         try {
             networkCall.get(url,true).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

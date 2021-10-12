@@ -1,7 +1,7 @@
-package com.richard.pokemonsdk.`interface`
+package com.richard.pokemonsdk.pokinterface
 
 interface PokemonAccessResult<Success, Errors> {
-    fun onStart()
+    fun onPokStart()
     fun onNetworkrequest()
     fun onSuccess(success: Success)
     fun onError(error: Errors)

@@ -56,6 +56,7 @@ class SearchUi : AppCompatActivity(), SearchUiContract.SearcUi, View.OnClickList
         )
         txView.layoutParams = param
         txView.textSize = 25F
+        txView.setTextColor(resources.getColor(R.color.black))
         txView.setText(pok.description)
         resultDisplay.addView(txView)
     }

@@ -1,9 +1,8 @@
 package com.richard.pokemonsdk.ui
 
-import android.util.Log
 import android.util.Log.*
 import com.google.gson.Gson
-import com.richard.pokemonsdk.`interface`.PokemonAccessResult
+import com.richard.pokemonsdk.pokinterface.PokemonAccessResult
 import com.richard.pokemonsdk.helpers.Variable
 import com.richard.pokemonsdk.model.*
 import com.richard.pokemonsdk.ui.adapters.SpritesAdapters
@@ -39,7 +38,7 @@ class SearchPresenterImplementation(searchView: SearchUiContract.SearcUi) : Sear
 
         Pokemon.getDescription(request, object :
             PokemonAccessResult<DescriptionResponse, ApiError> {
-            override fun onStart() {
+            override fun onPokStart() {
                 view.showProgress();
             }
 
@@ -55,7 +54,7 @@ class SearchPresenterImplementation(searchView: SearchUiContract.SearcUi) : Sear
                     ).flavor_text
                 ), object :
                     PokemonAccessResult<shakespeareRespnse, ApiError> {
-                    override fun onStart() {
+                    override fun onPokStart() {
                         d(LOGTAG, "Getting Translation")
                     }
 
@@ -119,6 +118,8 @@ class SearchPresenterImplementation(searchView: SearchUiContract.SearcUi) : Sear
     private fun downaloadImage(link: String?, pokeMoneUI: PokemonDescriptionAndSprites){
         if(!link.isNullOrEmpty()){
             pokeMoneUI.bitmap.add(link)
+            
+            //The code bellow is for mannual download but was passed to adapter and picaso handles the download
             //completedd.value = pokeMoneUI
             /* Pokemon.downloadSpritesImages(link!!, object : PokemonAccessResult<Bitmap, ApiError> {
                  override fun onStart() {
@@ -175,7 +176,7 @@ class SearchPresenterImplementation(searchView: SearchUiContract.SearcUi) : Sear
         }
 
         Pokemon.getSprites(request, object : PokemonAccessResult<SpriteResponse, ApiError> {
-            override fun onStart() {
+            override fun onPokStart() {
                 view.showProgress()
             }
 
